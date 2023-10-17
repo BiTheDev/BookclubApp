@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const discussionSchema = new mongoose.Schema({
-    bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book' },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+const discussionSchema = new Schema({
+    bookId: { type: Schema.Types.ObjectId, ref: 'Book' },
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
     content: String,
     timestamp: { type: Date, default: Date.now },
     comments: [String] // This can be further expanded into a separate Comment model if needed.
 });
 
-module.exports = mongoose.model('Discussion', discussionSchema);
+export default model('Discussion', discussionSchema);

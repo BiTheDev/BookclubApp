@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const testimonialSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+const testimonialSchema = new Schema({
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
     content: String,
     timestamp: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Testimonial', testimonialSchema);
+export default model('Testimonial', testimonialSchema);

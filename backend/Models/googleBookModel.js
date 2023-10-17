@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const googleBookSchema = new mongoose.Schema({
+const googleBookSchema = new Schema({
     googleId: String,  // Unique ID provided by Google Books for each book.
     title: String,
     authors: [String],
@@ -14,4 +14,4 @@ const googleBookSchema = new mongoose.Schema({
     // ... any other relevant fields you'd like to store.
 });
 
-module.exports = mongoose.model('GoogleBook', googleBookSchema);
+export default model('GoogleBook', googleBookSchema);
