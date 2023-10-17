@@ -7,20 +7,23 @@ import CommunityHighlight from './Components/CommunityHighlight/CommunityHighlig
 import UpcomingEvents from './Components/UpcomingEvents/UpcomingEvents'
 import JoinUs from './Components/JoinUs/JoinUs'
 import FAQs from './Components/FAQs/FAQs'
-import Footer from '../../Components/Footer/Footer'
 
 const LandingPage = () => {
   return (
     <div>
-        <Header/>
         <HeroSection/>
         <WaveDivider invert={true}/>
         <FeatureBooks/>
+        <WaveDivider />
         <CommunityHighlight/>
+        <WaveDivider invert={true}/>
         <UpcomingEvents/>
+        <WaveDivider />
         <JoinUs/>
+        <WaveDivider invert={true}/>
         <FAQs/>
-        <Footer/>
+        <WaveDivider/>
+
     </div>
   )
 }

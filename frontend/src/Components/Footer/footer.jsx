@@ -4,7 +4,7 @@ import { Facebook, Twitter, Instagram } from '@mui/icons-material';
 
 const Footer = () => {
   return (
-    <Box p={4} bgcolor="background.paper" mt={4}>
+    <Box p={4} bgcolor="background.paper">
       <Box display="flex" justifyContent="space-between" flexWrap="wrap">
 
         <Box>

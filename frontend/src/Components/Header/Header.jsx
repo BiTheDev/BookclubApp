@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Book } from '@mui/icons-material';
 import { Box } from '@mui/system';
 
 const Header = () => {
@@ -13,7 +14,7 @@ const Header = () => {
       <Toolbar>
         {/* Logo */}
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-          <MenuIcon /> {/* You can replace this with your Logo */}
+          <Book /> {/* You can replace this with your Logo */}
         </IconButton>
         
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -30,8 +31,8 @@ const Header = () => {
         </Box>
 
         {/* CTA Buttons */}
-        <Button color="secondary" variant="contained">Login</Button>
-        <Button color="secondary" variant="outlined" sx={{ ml: 2 }}>Register</Button>
+        <Button variant="contained" color="secondary">Login</Button>
+        <Button variant="outlined" color='secondary' sx={{ ml: 2 }}>Register</Button>
       </Toolbar>
     </AppBar>
   )
