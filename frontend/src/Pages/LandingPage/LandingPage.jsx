@@ -14,10 +14,16 @@ const LandingPage = () => {
         <HeroSection/>
         <WaveDivider invert={true}/>
         <FeatureBooks/>
+        <WaveDivider />
         <CommunityHighlight/>
+        <WaveDivider invert={true}/>
         <UpcomingEvents/>
+        <WaveDivider />
         <JoinUs/>
+        <WaveDivider invert={true}/>
         <FAQs/>
+        <WaveDivider/>
+
     </div>
   )
 }
