@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import HomeDashboard from './Pages/HomeDashboard/homeDashboard';
 import Access from './Pages/AccessPage/access';
 import './App.css'
+import LandingPage from './Pages/LandingPage/LandingPage';
 
 const darkTheme = createTheme({
   palette: {
@@ -17,7 +18,8 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomeDashboard />} />
+        <Route path="/" element={<LandingPage />} />
+          <Route path="/home" element={<HomeDashboard />} />
           <Route path="/access" element={<Access />} />
         </Routes>
       </BrowserRouter>
