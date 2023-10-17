@@ -2,12 +2,12 @@
 
 ## Stage 1 - planning and prototyping
 
-**Tech Stack** - Vite React, Material UI, RestfulAPI, PostgreSQL, Node.js, Express.js, JWT,
+**Tech Stack** - Vite React, Material UI, RestfulAPI, MongoDB, Node.js, Express.js, JWT, Google Books API
 
-1. Credential in progress - Phase 1
-    * login and register (Backend structure)
-    * login and register (Frontend styling with Material UI)
-2. Plan out structure of bookclub and users - Phase 2 (TBD)
+1. Basic Layout and structure - Phase 1
+    * Add general layout for frontend ( landing page and home dashboard)
+    * Add general backend database connection (user, book, event, discussion, etc..)
+2. Phase 2 (TBD)
 
 
 
