@@ -5,17 +5,25 @@ import HomeDashboard from './Pages/HomeDashboard/homeDashboard';
 import Access from './Pages/AccessPage/access';
 import './App.css'
 import LandingPage from './Pages/LandingPage/LandingPage';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
   }
 });
+const defaultTheme = createTheme({
+  palette: {
+    mode: "light",
+  }
+});
 
 function App() {
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={defaultTheme}>
+      <Header/>
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -23,6 +31,7 @@ function App() {
           <Route path="/access" element={<Access />} />
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </ThemeProvider>
   )
 }
