@@ -7,6 +7,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const booksRoutes = require('./Routes/bookRoutes');
+const userRoutes = require('./Routes/userRoutes');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -35,11 +37,17 @@ app.get('/', (req, res) => {
     res.send('Hello from BookClub Backend!');
 });
 
+
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
+
+// Routes
+app.use('/api/user', userRoutes);
+app.use('/api/books', booksRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
