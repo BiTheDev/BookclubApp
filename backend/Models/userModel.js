@@ -1,32 +1,17 @@
-import pkg from 'pg';
-const { Pool } = pkg;
-import dotenv from 'dotenv';
+const mongoose = require('mongoose');
 
-dotenv.config();
-
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT
+const userSchema = new mongoose.Schema({
+    username: { type: String, unique: true, required: true },
+    email: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
+    currentBooks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
+    completedBooks: [{
+        bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book' },
+        completionDate: Date
+    }],
+    recommendations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
+    profileImage: String,
+    joinDate: { type: Date, default: Date.now }
 });
 
-pool.connect();
-
-
-const createUser = async (username, password) => {
-
-    const result = await pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, password]);
-    pool.end;
-    return result;
-};
-
-const getUser = async (username) => {
-    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-    pool.end;
-    return result.rows[0];
-};
-
-
-export default {createUser, getUser}
+module.exports = mongoose.model('User', userSchema);
