@@ -5,7 +5,7 @@ const eventSchema = Schema({
     description: String,
     date: Date,
     location: String,
-    relatedBook: { type: mongoose.Schema.Types.ObjectId, ref: 'Book' }
+    relatedBook: { type: Schema.Types.ObjectId, ref: 'Book' }
 });
 
 const Event = model('Event', eventSchema);
