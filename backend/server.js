@@ -1,26 +1,28 @@
 // server.js
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const booksRoutes = require('./Routes/bookRoutes');
-const userRoutes = require('./Routes/userRoutes');
+import express from 'express';
+import { connect } from 'mongoose';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import { config } from 'dotenv';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import booksRoutes from './Routes/bookRoutes.js';
+import userRoutes from './Routes/userRoutes.js';
+import eventsRoutes from './Routes/eventRoutes.js';
 
 // Load environment variables from .env file
-dotenv.config();
+config();
 
 const app = express();
 
 // Middleware setup
-app.use(cors()); // Enable CORS for all routes
-app.use(bodyParser.json()); // Parse JSON request body
+app.use(bodyParser.json({limit:"30mb", extended:true}));
+app.use(bodyParser.urlencoded({limit:"30mb", extended:true}));
+app.use(cors());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
+connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -48,6 +50,7 @@ app.use((err, req, res, next) => {
 // Routes
 app.use('/api/user', userRoutes);
 app.use('/api/books', booksRoutes);
+app.use('/api/events', eventsRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
