@@ -3,6 +3,8 @@ import {
   Box, Typography, Button, Avatar, List, ListItem, ListItemIcon, ListItemText
 } from '@mui/material';
 import { Book, Chat, Event, TrendingUp } from '@mui/icons-material';
+import CurrentBook from './Components/CurrentBook/CurrentBook';
+import CompletedBooks from './Components/CompletedBooks/CompletedBooks';
 
 const HomeDashboard = () => {
   // Dummy data for illustration
@@ -41,6 +43,10 @@ const HomeDashboard = () => {
       </Box>
 
       {/* Other sections like Recommendations, Current Reads, Upcoming Events, etc. can follow similarly. */}
+      <Typography variant="h5">Current Book</Typography>
+      <CurrentBook/>
+      <Typography variant="h5">Completed Books</Typography>
+      <CompletedBooks/>
 
     </Box>
   )
