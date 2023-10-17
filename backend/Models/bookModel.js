@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const bookSchema = new mongoose.Schema({
+const bookSchema = new Schema({
     title: String,
     author: String,
     coverImageUrl: String,
@@ -8,8 +8,10 @@ const bookSchema = new mongoose.Schema({
     totalPages: Number,
     ISBN: String,
     source: { type: String, enum: ['GoogleBooks', 'UserAdded'] },
-    usersCurrentlyReading: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    usersCompleted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+    usersCurrentlyReading: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    usersCompleted: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 });
 
-module.exports = mongoose.model('Book', bookSchema);
+const Book = model('Book', bookSchema);
+
+export default Book;
