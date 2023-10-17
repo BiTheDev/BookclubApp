@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import { config } from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
 import booksRoutes from './Routes/bookRoutes.js';
 import userRoutes from './Routes/userRoutes.js';
 import eventsRoutes from './Routes/eventRoutes.js';
@@ -21,18 +22,6 @@ app.use(bodyParser.json({limit:"30mb", extended:true}));
 app.use(bodyParser.urlencoded({limit:"30mb", extended:true}));
 app.use(cors());
 
-// Connect to MongoDB
-connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-})
-.then(() => {
-    console.log("Connected to MongoDB!");
-})
-.catch((error) => {
-    console.error("MongoDB connection error:", error);
-});
 
 // Sample route
 app.get('/', (req, res) => {
@@ -53,6 +42,6 @@ app.use('/api/books', booksRoutes);
 app.use('/api/events', eventsRoutes);
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true, useUnifiedTopology:true})
+    .then(()=>app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
+    .catch((error)=>console.log(error.message));
