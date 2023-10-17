@@ -7,7 +7,9 @@
 1. Basic Layout and structure - Phase 1
     * Add general layout for frontend ( landing page and home dashboard)
     * Add general backend database connection (user, book, event, discussion, etc..)
-2. Phase 2 (TBD)
+2. Backend Routing Set Up - Phase 2
+    * Set up Backend MongoDB connection
+    * Added Controller, API Routes and Model for User, Book, Event and etc..
 
 
 
