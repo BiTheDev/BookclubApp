@@ -10,6 +10,9 @@
 2. Backend Routing Set Up - Phase 2
     * Set up Backend MongoDB connection
     * Added Controller, API Routes and Model for User, Book, Event and etc..
+3. Login and Registration
+    * Connect backend and frontend login and registration
+    * Add security (bcrypt, salt, passport)
 
 
 
