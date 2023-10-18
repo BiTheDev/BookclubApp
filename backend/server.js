@@ -50,7 +50,7 @@ app.use((err, req, res, next) => {
 });
 
 // Routes
-app.use('/api/user', userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/books', booksRoutes);
 app.use('/api/events', eventsRoutes);
 app.get('/api/searchBooks', async (req, res) => {
@@ -71,6 +71,6 @@ app.get('*', function (req, res) {
 });
 
 
-  app.listen(process.env.PORT || 3001, function() {
-    console.log(`Starting server now on port ${process.env.PORT || 3001}`);
+  app.listen(process.env.PORT || 10000, function() {
+    console.log(`Starting server now on port ${process.env.PORT || 10000}`);
   })
