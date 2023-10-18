@@ -15,7 +15,7 @@ export async function register(req, res) {
 
         // Create a new user
         user = new User({
-            name: req.body.name,
+            username: req.body.username,
             email: req.body.email,
             password: hashedPassword
         });
