@@ -4,13 +4,28 @@ import { TextField, Button, Grid, Typography, Paper } from '@mui/material';
 
 const Register = () => {
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [retypePassword, setRetypePassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{12,16})/;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (password !== retypePassword) {
+            setPasswordError("Passwords don't match!");
+            return;
+        }
+        
+        if (!passwordPattern.test(password)) {
+            setPasswordError('Password does not meet the criteria.');
+            return;
+        }
+
         try {
-            await axios.post('/api/users/register', { username, password });
+            await axios.post('/api/users/register', { username, email, password });
             // You can add a redirection to login or show a success message here
         } catch (error) {
             console.error('Registration failed:', error.response.data);
@@ -34,11 +49,32 @@ const Register = () => {
                     <Grid item>
                         <TextField
                             fullWidth
+                            label="Email"
+                            variant="outlined"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            fullWidth
                             label="Password"
                             type="password"
                             variant="outlined"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            fullWidth
+                            label="Retype Password"
+                            type="password"
+                            variant="outlined"
+                            value={retypePassword}
+                            onChange={(e) => setRetypePassword(e.target.value)}
+                            error={passwordError ? true : false}
+                            helperText={passwordError}
                         />
                     </Grid>
                     <Grid item>
