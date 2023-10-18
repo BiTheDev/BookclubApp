@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { TextField, Button, Grid, Typography, Paper } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -8,6 +9,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [retypePassword, setRetypePassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const navigate = useNavigate();
 
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{12,16})/;
 
@@ -26,6 +28,7 @@ const Register = () => {
 
         try {
             await axios.post('/api/users/register', { username, email, password });
+            navigate("/home");
             // You can add a redirection to login or show a success message here
         } catch (error) {
             console.error('Registration failed:', error.response.data);
