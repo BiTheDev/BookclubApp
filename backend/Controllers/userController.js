@@ -1,5 +1,3 @@
-// Controllers/UserController.js
-
 import User from '../Models/userModel.js';
 import { hash, compare } from 'bcrypt';
 const { sign } = 'jsonwebtoken';

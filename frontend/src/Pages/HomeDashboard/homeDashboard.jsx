@@ -5,6 +5,7 @@ import {
 import { Book, Chat, Event, TrendingUp } from '@mui/icons-material';
 import CurrentBook from './Components/CurrentBook/CurrentBook';
 import CompletedBooks from './Components/CompletedBooks/CompletedBooks';
+import BookSearch from './Components/BookSearch/BookSearch';
 
 const HomeDashboard = () => {
   // Dummy data for illustration
@@ -47,6 +48,7 @@ const HomeDashboard = () => {
       <CurrentBook/>
       <Typography variant="h5">Completed Books</Typography>
       <CompletedBooks/>
+      <BookSearch/>
 
     </Box>
   )
