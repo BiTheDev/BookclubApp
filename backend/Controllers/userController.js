@@ -50,4 +50,64 @@ export async function login(req, res) {
     }
 }
 
+export async function updateUser(req, res) {
+    try {
+        const userId = req.user._id;
+        const updates = req.body;
+        const user = await User.findByIdAndUpdate(userId, updates, { new: true });
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating user info', error });
+    }
+}
+
+export async function getUserInfo(req, res) {
+    try {
+        const userId = req.user._id;
+        const user = await User.findById(userId);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching user info', error });
+    }
+}
+
+
+export async function addCurrentBook(req, res) {
+    try {
+        const userId = req.user._id;
+        const bookId = req.body.bookId;
+        const user = await User.findById(userId);
+        user.currentBooks.push(bookId);
+        await user.save();
+        res.status(200).json({ message: 'Book added to current reads' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error adding book', error });
+    }
+}
+
+
+export async function completeBook(req, res) {
+    try {
+        const userId = req.user._id;
+        const { bookId } = req.body;
+
+        const user = await User.findById(userId);
+        const bookIndex = user.currentBooks.indexOf(bookId);
+
+        if (bookIndex > -1) {
+            user.currentBooks.splice(bookIndex, 1);
+            user.completedBooks.push({ bookId, completionDate: new Date() });
+            await user.save();
+            res.status(200).json({ message: 'Book marked as completed' });
+        } else {
+            res.status(400).json({ message: 'Book not found in current reads' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error completing book', error });
+    }
+}
+
+
+
+
 // ... Add other user-related controllers
