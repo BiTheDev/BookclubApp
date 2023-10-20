@@ -34,21 +34,22 @@ export async function register(req, res) {
 
 export async function login(req, res) {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ username: req.body.username });
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid username or password" });
     }
 
     const validPassword = await compare(req.body.password, user.password);
     if (!validPassword) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid username or password" });
     }
-
+    console.log(user)
     // Generate a JWT token
-    const token = sign({ _id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-
+    console.log("token");
+    console.log(token)
     res.status(200).json({ token, user });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
