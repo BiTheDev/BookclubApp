@@ -8,12 +8,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Book } from '@mui/icons-material';
 import { Box } from '@mui/system';
 import { AuthContext } from '../../authContext';
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('jwtToken');
     setAuthToken(null);
+    navigate("/");
   }
 
   return (

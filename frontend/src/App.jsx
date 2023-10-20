@@ -25,15 +25,15 @@ function App() {
   return (
     <AuthProvider>
       <ThemeProvider theme={defaultTheme}>
-        <Header />
         <BrowserRouter>
+        <Header />
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/home" element={<ProtectedRoute component={HomeDashboard} />} />
+            <Route path="/home" element={<HomeDashboard/>} />
             <Route path="/access" element={<Access />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
-        <Footer />
       </ThemeProvider>
     </AuthProvider>
   );
