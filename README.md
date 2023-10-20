@@ -12,7 +12,7 @@
     * Added Controller, API Routes and Model for User, Book, Event and etc..
 3. Login and Registration
     * Connect backend and frontend login and registration
-    * Add security (bcrypt, salt, passport)
+    * Add security (bcrypt, salt, token)
 
 
 
