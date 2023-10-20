@@ -18,17 +18,8 @@ import { AuthContext } from "../../authContext";
 const HomeDashboard = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
   const [user, setUser] = useState(null);
-  // Dummy data for illustration
-  // const user = {
-  //   name: "John Doe",
-  //   avatarUrl: "https://example.com/avatar.jpg",
-  //   booksRead: 5,
-  //   discussionsJoined: 3,
-  //   upcomingEvents: 2
-  // };
   useEffect(() => {
     if (authToken) {
-      // Fetching user details based on authToken
       fetch('api/users/userInfo', {
         method: 'GET',
         headers: {
