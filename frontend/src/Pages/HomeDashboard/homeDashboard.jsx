@@ -29,7 +29,7 @@ const HomeDashboard = () => {
   useEffect(() => {
     if (authToken) {
       // Fetching user details based on authToken
-      fetch('/userInfo', {
+      fetch('api/users/userInfo', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -45,6 +45,7 @@ const HomeDashboard = () => {
         console.error("Error fetching user details:", error);
       });
     }
+    console.log(user);
   }, [authToken]);
 
   if (!user) return <Typography>Loading...</Typography>;
@@ -57,7 +58,7 @@ const HomeDashboard = () => {
         alignItems="center"
         mb={4}
       >
-        <Typography variant="h4">Hello, {user.name}!</Typography>
+        <Typography variant="h4">Hello, {user.username}!</Typography>
         <Typography variant="body1">
           "A room without books is like a body without a soul." - Cicero
         </Typography>
@@ -67,11 +68,11 @@ const HomeDashboard = () => {
       <Box display="flex" alignItems="center" mb={4}>
         <Avatar
           src={user.avatarUrl}
-          alt={user.name}
+          alt={user.username}
           sx={{ width: 60, height: 60, mr: 3 }}
         />
         <Box>
-          <Typography variant="h6">{user.name}</Typography>
+          <Typography variant="h6">{user.username}</Typography>
           <Typography variant="body2">Books read: {user.booksRead}</Typography>
           <Typography variant="body2">
             Discussions: {user.discussionsJoined}

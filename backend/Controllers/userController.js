@@ -57,7 +57,7 @@ export async function login(req, res) {
 
 export async function updateUser(req, res) {
   try {
-    const userId = req.user._id;
+    const userId = req.userId;
     const updates = req.body;
     const user = await User.findByIdAndUpdate(userId, updates, { new: true });
     res.status(200).json(user);
@@ -68,7 +68,7 @@ export async function updateUser(req, res) {
 
 export async function getUserInfo(req, res) {
   try {
-    const userId = req.user._id;
+    const userId = req.userId;
     const user = await User.findById(userId);
     res.status(200).json(user);
   } catch (error) {
@@ -78,7 +78,7 @@ export async function getUserInfo(req, res) {
 
 export async function addCurrentBook(req, res) {
   try {
-    const userId = req.user._id;
+    const userId = req.userId;
     const bookId = req.body.bookId;
     const user = await User.findById(userId);
     user.currentBooks.push(bookId);
@@ -91,7 +91,7 @@ export async function addCurrentBook(req, res) {
 
 export async function completeBook(req, res) {
   try {
-    const userId = req.user._id;
+    const userId = req.userId;
     const { bookId } = req.body;
 
     const user = await User.findById(userId);
