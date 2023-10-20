@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { TextField, Button, Grid, Typography, Paper } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post("/api/users/login", {
-        email,
+        username,
         password,
       });
       localStorage.setItem("jwtToken", response.data.token);
       navigate("/home");
     } catch (error) {
-      console.error("Login failed:", error.response.data);
+      console.error("Login failed:", error);
     }
   };
 
