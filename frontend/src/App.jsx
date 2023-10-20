@@ -7,7 +7,8 @@ import "./App.css";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
-import { AuthProvider } from "./authContext";// Adjust the path accordingly
+import { AuthProvider } from "./authContext";
+import ProtectedRoute from "./Components/Security/ProtectedRoute";
 
 const darkTheme = createTheme({
   palette: {
@@ -28,7 +29,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/home" element={<HomeDashboard />} />
+            <Route path="/home" element={<ProtectedRoute component={HomeDashboard} />} />
             <Route path="/access" element={<Access />} />
           </Routes>
         </BrowserRouter>

@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import { useHistory } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -12,11 +11,9 @@ import { AuthContext } from '../../authContext';
 
 const Header = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
-  const history = useHistory();
   const handleLogout = () => {
     localStorage.removeItem('jwtToken');
     setAuthToken(null);
-    history.push('/');
   }
 
   return (
