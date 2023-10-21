@@ -8,7 +8,6 @@ import LandingPage from "./Pages/LandingPage/LandingPage";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import { AuthProvider } from "./authContext";
-import ProtectedRoute from "./Components/Security/ProtectedRoute";
 
 const darkTheme = createTheme({
   palette: {
