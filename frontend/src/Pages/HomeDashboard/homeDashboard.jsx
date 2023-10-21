@@ -1,4 +1,4 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  CircularProgress,
 } from "@mui/material";
 import { Book, Chat, Event, TrendingUp } from "@mui/icons-material";
 import CurrentBook from "./Components/CurrentBook/CurrentBook";
@@ -19,33 +20,41 @@ const HomeDashboard = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
   const [user, setUser] = useState(null);
 
-
   useEffect(() => {
-  const timer = setTimeout(() => {
-    if (authToken) {
-      fetch('api/users/userInfo', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`
-        }
-      })
-      .then(res => {
-        if(!res.ok) throw new Error('Error fetching user info');
-        return res.json();
-      })
-      .then(data => setUser(data))
-      .catch(error => {
-        console.error("Error fetching user details:", error);
-      });
-    }
-  }, 2000); // 2 seconds delay before executing the logic
+    const timer = setTimeout(() => {
+      if (authToken) {
+        fetch("api/users/userInfo", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error("Error fetching user info");
+            return res.json();
+          })
+          .then((data) => setUser(data))
+          .catch((error) => {
+            console.error("Error fetching user details:", error);
+          });
+      }
+    }, 2000); // 2 seconds delay before executing the logic
 
-  return () => clearTimeout(timer); // Cleanup: clears the timer if the component is unmounted before the timer completes
-}, [authToken]);
+    return () => clearTimeout(timer); // Cleanup: clears the timer if the component is unmounted before the timer completes
+  }, [authToken]);
 
-
-  if (!user) return <Typography>Loading...</Typography>;
+  if (!user)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
   return (
     <Box p={4}>
       {/* Welcome Banner */}
