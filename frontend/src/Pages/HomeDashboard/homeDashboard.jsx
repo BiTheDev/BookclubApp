@@ -18,7 +18,10 @@ import { AuthContext } from "../../authContext";
 const HomeDashboard = () => {
   const { authToken, setAuthToken } = useContext(AuthContext);
   const [user, setUser] = useState(null);
+
+
   useEffect(() => {
+  const timer = setTimeout(() => {
     if (authToken) {
       fetch('api/users/userInfo', {
         method: 'GET',
@@ -36,8 +39,11 @@ const HomeDashboard = () => {
         console.error("Error fetching user details:", error);
       });
     }
-    console.log(user);
-  }, [authToken]);
+  }, 2000); // 2 seconds delay before executing the logic
+
+  return () => clearTimeout(timer); // Cleanup: clears the timer if the component is unmounted before the timer completes
+}, [authToken]);
+
 
   if (!user) return <Typography>Loading...</Typography>;
   return (

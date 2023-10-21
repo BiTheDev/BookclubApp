@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { TextField, Button, Grid, Typography, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../authContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setAuthToken } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ const Login = () => {
         password,
       });
       localStorage.setItem("jwtToken", response.data.token);
+      setAuthToken(prevToken => response.data.token !== prevToken ? response.data.token : prevToken);
       navigate("/home");
     } catch (error) {
       console.error("Login failed:", error);

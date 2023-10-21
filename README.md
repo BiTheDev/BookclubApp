@@ -13,6 +13,10 @@
 3. Login and Registration
     * Connect backend and frontend login and registration
     * Add security (bcrypt, salt, token)
+4. User Profile, Settings and Browse All Books
+    * User Profile: able to see, update and delete account
+    * Settings: TBD
+    * All-Books page: see all books( including review, discussion, trending books)
 
 
 ## Stage 2 - TBD

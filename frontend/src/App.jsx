@@ -7,6 +7,9 @@ import "./App.css";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
+import Profile from "./Pages/Profile/Profile";
+import Setting from "./Pages/Setting/Setting";
+import AllBooks from "./Pages/AllBooks/AllBooks";
 import { AuthProvider } from "./authContext";
 
 const darkTheme = createTheme({
@@ -30,6 +33,9 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/home" element={<HomeDashboard/>} />
             <Route path="/access" element={<Access />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Setting />} />
+            <Route path="/all-books" element={<AllBooks />} />
           </Routes>
           <Footer />
         </BrowserRouter>
