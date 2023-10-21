@@ -43,13 +43,10 @@ export async function login(req, res) {
     if (!validPassword) {
       return res.status(400).json({ message: "Invalid username or password" });
     }
-    console.log(user)
     // Generate a JWT token
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    console.log("token");
-    console.log(token)
     res.status(200).json({ token, user });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
