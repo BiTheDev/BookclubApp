@@ -1,41 +1,68 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-} from "@mui/material";
+import { Box, Typography, Card, CardContent, CardMedia, Select, MenuItem } from "@mui/material";
+
+
+const genres = [
+  "fiction",
+  "mystery",
+  "fantasy",
+  "history",
+  "science",
+  "romance",
+  "biography",
+  "self-help",
+  "business",
+  "thriller",
+];
 
 const TrendingBooks = () => {
   const [trendingBooks, setTrendingBooks] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("fiction");
 
   useEffect(() => {
-    fetch("/api/trendingBooks")
+    fetch(`/api/trendingBooks?genre=${selectedGenre}`)
       .then((response) => response.json())
       .then((data) => setTrendingBooks(data))
       .catch((error) => console.error("Error fetching trending books:", error));
-  }, []);
+  }, [selectedGenre]);
+
+  const handleGenreChange = (event) => {
+    setSelectedGenre(event.target.value);
+  };
+
+  const defaultImage = "path_to_default_image.jpg"; // Provide a default or placeholder image URL here
 
   return (
-    <Box p={3}>
+    <Box p={1}>
+      <Typography variant="h5" gutterBottom>Trending Books</Typography>
+      <Box mb={3} display="flex" alignItems="center">
+        <Typography variant="h6" mr={2}>Select a Genre:</Typography>
+        <Select value={selectedGenre} onChange={handleGenreChange}>
+          {genres.map((genre) => (
+            <MenuItem key={genre} value={genre}>
+              {genre.charAt(0).toUpperCase() + genre.slice(1)}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
       <Box display="flex" overflow="auto">
         {trendingBooks.map((book, index) => (
-          <Box key={index} width={250} mr={2}>
-            <Card>
-              {book.volumeInfo.imageLinks && (
-                <CardMedia
-                  component="img"
-                  sx={{
-                    height: 140,
-                    objectFit: "contain",
-                    objectPosition: "center",
-                  }}
-                  image={book.volumeInfo.imageLinks.thumbnail}
-                  alt={book.volumeInfo.title}
-                />
-              )}
+          <Box key={index} width={250} height={320} mr={2}>
+            <Card sx={{ height: "100%", width: "200px" }}>
+              <CardMedia
+                component="img"
+                sx={{
+                  height: 130,
+                  objectFit: "contain",
+                  objectPosition: "center",
+                }}
+                image={
+                  book.volumeInfo.imageLinks
+                    ? book.volumeInfo.imageLinks.thumbnail
+                    : defaultImage
+                }
+                alt={book.volumeInfo.title}
+              />
               <CardContent>
                 <Typography variant="h6" noWrap>
                   {book.volumeInfo.title}
