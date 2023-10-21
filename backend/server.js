@@ -53,6 +53,8 @@ app.use((err, req, res, next) => {
 app.use('/api/users', userRoutes);
 app.use('/api/books', booksRoutes);
 app.use('/api/events', eventsRoutes);
+
+//Google book routes
 app.get('/api/searchBooks', async (req, res) => {
     const query = req.query.q;
     const googleBooksApiKey = process.env.GOOGLE_BOOKS_API_KEY;
@@ -65,6 +67,18 @@ app.get('/api/searchBooks', async (req, res) => {
     }
 });
 
+app.get('/api/trendingBooks', async (req, res) => {
+  const query = "fiction"; // replace this with any keyword or genre
+    const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
+    const maxResults = 10; // number of books to fetch
+    
+    try {
+        const { data } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=${maxResults}&key=${apiKey}`);
+        res.status(200).json(data.items);
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch from Google Books', error });
+    }
+});
 app.get('*', function (req, res) {
   console.log("received request");
   res.sendFile(path.join(frontend_dir, "index.html"));
