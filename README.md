@@ -15,7 +15,8 @@
     * Add security (bcrypt, salt, token)
 
 
-
+## Stage 2 - TBD
+## Stage 3 (final?) - TBD
 
 
 
