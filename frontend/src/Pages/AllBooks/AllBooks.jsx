@@ -16,12 +16,9 @@ const AllBooks = () => {
       <TopRatedBooks/>
       {authToken && (
         <>
-          <Typography variant="h5" gutterBottom>Recommended for You</Typography>
           <RecommendationBooks />
         </>
       )}
-
-      <Typography variant="h5" gutterBottom>All Books</Typography>
       <BookList />
     </Box>
   );

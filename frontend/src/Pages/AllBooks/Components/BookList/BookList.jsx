@@ -1,5 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, TextField, Select, MenuItem, Card, CardContent, CardMedia } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Select,
+  MenuItem,
+  Card,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 
 const genres = [
   "fiction",
@@ -14,45 +23,77 @@ const genres = [
   "thriller",
 ];
 
+const languages = [
+  { code: "en", label: "English" },
+  { code: "fr", label: "French" },
+  { code: "es", label: "Spanish" },
+  {code: "zh-CN", label: "Chinese"}
+  // Add more languages as needed
+];
+
 const BookList = () => {
   const [books, setBooks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedGenre, setSelectedGenre] = useState('fiction');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("fiction");
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   useEffect(() => {
     fetchBooks();
-  }, [searchTerm, selectedGenre]);
+  }, [searchTerm, selectedGenre, selectedLanguage]);
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch(`/api/all_books_list?search=${searchTerm}&genre=${selectedGenre}`);
+      const response = await fetch(
+        `/api/all_books_list?search=${searchTerm}&genre=${selectedGenre}&language=${selectedLanguage}`
+      );
       const data = await response.json();
       setBooks(data);
     } catch (error) {
       console.error("Error fetching book list:", error);
     }
   };
-  
 
   const defaultImage = "path_to_default_image.jpg";
 
   return (
     <Box p={1}>
-      <Typography variant="h5" gutterBottom>Book List</Typography>
+      <Typography variant="h5" gutterBottom>
+        Other Books
+      </Typography>
 
       <Box mb={3} display="flex" alignItems="center">
-        <Typography variant="h6" mr={2}>Search:</Typography>
-        <TextField 
-          variant="outlined" 
-          size="small" 
-          value={searchTerm} 
-          onChange={(e) => setSearchTerm(e.target.value)} 
+        <Typography variant="h6" mr={2}>
+          Search:
+        </Typography>
+        <TextField
+          variant="outlined"
+          size="small"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <Typography variant="h6" mr={2} ml={3}>Genre:</Typography>
-        <Select value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)}>
-          {genres.map(genre => (
+        <Typography variant="h6" mr={2} ml={3}>
+          Genre:
+        </Typography>
+        <Select
+          value={selectedGenre}
+          onChange={(e) => setSelectedGenre(e.target.value)}
+        >
+          {genres.map((genre) => (
             <MenuItem key={genre} value={genre}>
               {genre.charAt(0).toUpperCase() + genre.slice(1)}
+            </MenuItem>
+          ))}
+        </Select>
+        <Typography variant="h6" mr={2} ml={3}>
+          Language:
+        </Typography>
+        <Select
+          value={selectedLanguage}
+          onChange={(e) => setSelectedLanguage(e.target.value)}
+        >
+          {languages.map((lang) => (
+            <MenuItem key={lang.code} value={lang.code}>
+              {lang.label}
             </MenuItem>
           ))}
         </Select>

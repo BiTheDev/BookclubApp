@@ -70,27 +70,29 @@ app.get('/api/searchBooks', async (req, res) => {
 const genres = ["fiction", "mystery", "fantasy", "history", "science", "romance", "biography", "self-help", "business", "thriller"]; 
 
 app.get('/api/trendingBooks', async (req, res) => {
-  const genre = req.query.genre || genres[Math.floor(Math.random() * genres.length)]; // If genre is not provided, select a random one
+  const genre = req.query.genre || genres[Math.floor(Math.random() * genres.length)];
+  const language = req.query.language || "en"; // Default to English
   const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
-  const maxResults = 10; // number of books to fetch
+  const maxResults = 10;
 
   try {
-      const { data } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${genre}&orderBy=newest&maxResults=${maxResults}&key=${apiKey}`);
-      res.status(200).json(data.items);
+    const { data } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${genre}&orderBy=newest&maxResults=${maxResults}&langRestrict=${language}&key=${apiKey}`);
+    res.status(200).json(data.items);
   } catch (error) {
-      res.status(500).json({ message: 'Failed to fetch from Google Books', error });
+    res.status(500).json({ message: 'Failed to fetch from Google Books', error });
   }
 });
 
 
 app.get('/api/all_books_list', async (req, res) => {
   const genre = req.query.genre || genres[Math.floor(Math.random() * genres.length)];
-  const searchTerm = req.query.search || ''; // If search term is not provided, it'll be an empty string
+  const searchTerm = req.query.search || '';
+  const language = req.query.language || "en"; // Default to English
   const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
-  const maxResults = 10; 
+  const maxResults = 10;
 
   try {
-    const { data } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}${genre ? `+subject:${genre}` : ''}&maxResults=${maxResults}&key=${apiKey}`);
+    const { data } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}${genre ? `+subject:${genre}` : ''}&maxResults=${maxResults}&langRestrict=${language}&key=${apiKey}`);
     res.status(200).json(data.items);
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch books from Google Books', error });
@@ -99,12 +101,13 @@ app.get('/api/all_books_list', async (req, res) => {
 
 
 app.get('/api/topRatedBooks', async (req, res) => {
-  const genre = req.query.genre || genres[Math.floor(Math.random() * genres.length)]; // If genre is not provided, select a random one
+  const genre = req.query.genre || genres[Math.floor(Math.random() * genres.length)];
+  const language = req.query.language || "en"; // Default to English
   const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
-  const maxResults = 40; // fetch more results as we'll be sorting and slicing 
+  const maxResults = 40;
 
   try {
-    const { data } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${genre}&maxResults=${maxResults}&key=${apiKey}`);
+    const { data } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${genre}&maxResults=${maxResults}&langRestrict=${language}&key=${apiKey}`);
     
     if (data.items) {
       const sortedByRating = data.items.sort((a, b) => {
@@ -113,7 +116,6 @@ app.get('/api/topRatedBooks', async (req, res) => {
         return ratingB - ratingA;
       });
 
-      // Return the top 10 highest-rated books
       res.status(200).json(sortedByRating.slice(0, 10));
     } else {
       res.status(200).json([]);

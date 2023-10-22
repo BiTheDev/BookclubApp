@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Card, CardContent, CardMedia, Select, MenuItem } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
 const genres = [
   "fiction",
@@ -14,16 +22,25 @@ const genres = [
   "thriller",
 ];
 
+const languages = [
+  { code: "en", label: "English" },
+  { code: "fr", label: "French" },
+  { code: "es", label: "Spanish" },
+  {code: "zh-CN", label: "Chinese"}
+  // Add more languages as needed
+];
+
 const BooksDisplay = ({ title, apiUrl }) => {
   const [books, setBooks] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("fiction");
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   useEffect(() => {
-    fetch(`${apiUrl}?genre=${selectedGenre}`)
+    fetch(`${apiUrl}?genre=${selectedGenre}&language=${selectedLanguage}`)
       .then((response) => response.json())
       .then((data) => setBooks(data))
       .catch((error) => console.error(`Error fetching ${title}:`, error));
-  }, [selectedGenre, apiUrl, title]);
+  }, [selectedGenre, apiUrl, title, selectedLanguage]);
 
   const handleGenreChange = (event) => {
     setSelectedGenre(event.target.value);
@@ -33,13 +50,30 @@ const BooksDisplay = ({ title, apiUrl }) => {
 
   return (
     <Box p={1}>
-      <Typography variant="h5" gutterBottom>{title}</Typography>
+      <Typography variant="h5" gutterBottom>
+        {title}
+      </Typography>
       <Box mb={3} display="flex" alignItems="center">
-        <Typography variant="h6" mr={2}>Select a Genre:</Typography>
+        <Typography variant="h6" mr={2}>
+          Select a Genre:
+        </Typography>
         <Select value={selectedGenre} onChange={handleGenreChange}>
           {genres.map((genre) => (
             <MenuItem key={genre} value={genre}>
               {genre.charAt(0).toUpperCase() + genre.slice(1)}
+            </MenuItem>
+          ))}
+        </Select>
+        <Typography variant="h6" mr={2} ml={3}>
+          Language:
+        </Typography>
+        <Select
+          value={selectedLanguage}
+          onChange={(e) => setSelectedLanguage(e.target.value)}
+        >
+          {languages.map((lang) => (
+            <MenuItem key={lang.code} value={lang.code}>
+              {lang.label}
             </MenuItem>
           ))}
         </Select>
