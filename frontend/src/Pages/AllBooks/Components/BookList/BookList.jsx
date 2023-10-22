@@ -44,7 +44,7 @@ const BookList = () => {
   const fetchBooks = async () => {
     try {
       const response = await fetch(
-        `/api/all_books_list?search=${searchTerm}&genre=${selectedGenre}&language=${selectedLanguage}`
+        `/api/books/all-list?search=${searchTerm}&genre=${selectedGenre}&language=${selectedLanguage}`
       );
       const data = await response.json();
       setBooks(data);
