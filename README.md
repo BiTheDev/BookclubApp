@@ -16,11 +16,12 @@
 4. User Profile, Settings and Browse All Books
     * User Profile: able to see, update and delete account
     * Settings: TBD
-    * All-Books page: see all books( including review, discussion, trending books)
+    * All-Books page: see all books( including trending books and top rated books)
+    * 
 
 
 ## Stage 2 - TBD
-## Stage 3 (final?) - TBD
+## Stage 3 (final?mirgate to next.js? implement AI?) - TBD
 
 
 
