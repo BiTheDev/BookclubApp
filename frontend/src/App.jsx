@@ -10,6 +10,7 @@ import Footer from "./Components/Footer/Footer";
 import Profile from "./Pages/Profile/Profile";
 import Setting from "./Pages/Setting/Setting";
 import AllBooks from "./Pages/AllBooks/AllBooks";
+import BookDetail from "./Pages/BookDetail/BookDetail";
 import { AuthProvider } from "./authContext";
 
 const darkTheme = createTheme({
@@ -36,6 +37,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Setting />} />
             <Route path="/all-books" element={<AllBooks />} />
+            <Route path="/book-detail/:id" element={<BookDetail />} />
           </Routes>
           <Footer />
         </BrowserRouter>

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'; // <-- Import this at the top
+
 import {
   Box,
   Typography,
@@ -30,10 +32,12 @@ const languages = [
   // Add more languages as needed
 ];
 
+
 const BooksDisplay = ({ title, apiUrl }) => {
   const [books, setBooks] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("fiction");
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${apiUrl}?genre=${selectedGenre}&language=${selectedLanguage}`)
@@ -47,6 +51,43 @@ const BooksDisplay = ({ title, apiUrl }) => {
   };
 
   const defaultImage = "path_to_default_image.jpg";
+
+  const handleBookClick = async (book) => {
+    console.log("click");
+    console.log(book);
+    try {
+        // Check if the book is from Google Books or already from our DB
+            // Save book to local DB
+            const response = await fetch('/api/books/save-google-book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: book.volumeInfo.title,
+                    author: book.volumeInfo.authors[0],
+                    coverImageUrl: book.volumeInfo.imageLinks.thumbnail,
+                    description: book.volumeInfo.description,
+                    ISBN: book.volumeInfo.industryIdentifiers[0].identifier,
+                }),
+            });
+            const responseData = await response.json();
+            if (response.status === 400) {
+              // Book already exists
+              navigate(`/book-detail/${responseData.book._id}`);
+          } else if (response.status === 201) {
+              // Book saved successfully
+              navigate(`/book-detail/${responseData._id}`);
+          } else {
+              // Handle other status codes or errors
+              console.error('Error saving or navigating to book:', responseData.message);
+          }
+
+    } catch (error) {
+        console.error('Error saving or navigating to book:', error);
+    }
+}
+
 
   return (
     <Box p={1}>
@@ -81,7 +122,7 @@ const BooksDisplay = ({ title, apiUrl }) => {
       <Box display="flex" overflow="auto">
         {books.map((book, index) => (
           <Box key={index} width={250} height={320} mr={2}>
-            <Card sx={{ height: "100%", width: "200px" }}>
+            <Card sx={{ height: "100%", width: "200px" }} onClick={() => handleBookClick(book)}>
               <CardMedia
                 component="img"
                 sx={{

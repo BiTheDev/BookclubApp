@@ -11,6 +11,7 @@ import {
   trendingBooks,
   allBooksList,
   topRatedBooks,
+  saveGoogleBook
 } from "../Controllers/bookController.js";
 
 const router = Router();
@@ -29,5 +30,7 @@ router.get("/get-book/:id", getBookById);
 router.post("/add-book", addBook);
 router.put("/update-book/:id", updateBook);
 router.delete("/delete-book/:id", deleteBook);
+router.post("/save-google-book", saveGoogleBook);
+
 
 export default router;
