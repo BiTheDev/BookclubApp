@@ -68,6 +68,7 @@ const BooksDisplay = ({ title, apiUrl }) => {
                     author: book.volumeInfo.authors[0],
                     coverImageUrl: book.volumeInfo.imageLinks.thumbnail,
                     description: book.volumeInfo.description,
+                    totalPages:book.volumeInfo.pageCount,
                     ISBN: book.volumeInfo.industryIdentifiers[0].identifier,
                 }),
             });

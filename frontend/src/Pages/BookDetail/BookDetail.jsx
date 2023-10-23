@@ -34,7 +34,7 @@ const BookDetail = () => {
       <Card sx={{ display: 'flex', marginTop: 3 }}>
         <CardMedia
           component="img"
-          sx={{ height:'auto', width: 200, backgroundSize: 'contain' }}
+          sx={{minWidth: 200, backgroundSize: 'contain' }}
           image={book.coverImageUrl}
           alt={book.title}
         />
