@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
-  TextField,
-  Select,
-  MenuItem,
   Card,
   CardContent,
   CardMedia,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 const genres = [
@@ -31,26 +30,20 @@ const languages = [
   // Add more languages as needed
 ];
 
-const BookList = () => {
+const BooksDisplay = ({ title, apiUrl }) => {
   const [books, setBooks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("fiction");
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   useEffect(() => {
-    fetchBooks();
-  }, [searchTerm, selectedGenre, selectedLanguage]);
+    fetch(`${apiUrl}?genre=${selectedGenre}&language=${selectedLanguage}`)
+      .then((response) => response.json())
+      .then((data) => setBooks(data))
+      .catch((error) => console.error(`Error fetching ${title}:`, error));
+  }, [selectedGenre, apiUrl, title, selectedLanguage]);
 
-  const fetchBooks = async () => {
-    try {
-      const response = await fetch(
-        `/api/books/all-list?search=${searchTerm}&genre=${selectedGenre}&language=${selectedLanguage}`
-      );
-      const data = await response.json();
-      setBooks(data);
-    } catch (error) {
-      console.error("Error fetching book list:", error);
-    }
+  const handleGenreChange = (event) => {
+    setSelectedGenre(event.target.value);
   };
 
   const defaultImage = "path_to_default_image.jpg";
@@ -58,26 +51,13 @@ const BookList = () => {
   return (
     <Box p={1}>
       <Typography variant="h5" gutterBottom>
-        Other Books
+        {title}
       </Typography>
-
       <Box mb={3} display="flex" alignItems="center">
         <Typography variant="h6" mr={2}>
-          Search:
+          Select a Genre:
         </Typography>
-        <TextField
-          variant="outlined"
-          size="small"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <Typography variant="h6" mr={2} ml={3}>
-          Genre:
-        </Typography>
-        <Select
-          value={selectedGenre}
-          onChange={(e) => setSelectedGenre(e.target.value)}
-        >
+        <Select value={selectedGenre} onChange={handleGenreChange}>
           {genres.map((genre) => (
             <MenuItem key={genre} value={genre}>
               {genre.charAt(0).toUpperCase() + genre.slice(1)}
@@ -98,10 +78,9 @@ const BookList = () => {
           ))}
         </Select>
       </Box>
-
-      <Box display="flex" flexWrap="wrap">
+      <Box display="flex" overflow="auto">
         {books.map((book, index) => (
-          <Box key={index} width={250} height={320} m={2}>
+          <Box key={index} width={250} height={320} mr={2}>
             <Card sx={{ height: "100%", width: "200px" }}>
               <CardMedia
                 component="img"
@@ -136,4 +115,4 @@ const BookList = () => {
   );
 };
 
-export default BookList;
+export default BooksDisplay;

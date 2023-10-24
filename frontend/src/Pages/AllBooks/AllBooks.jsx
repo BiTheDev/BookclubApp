@@ -12,17 +12,13 @@ const AllBooks = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h5" gutterBottom>Trending Books</Typography>
       <TrendingBooks />
       <TopRatedBooks/>
       {authToken && (
         <>
-          <Typography variant="h5" gutterBottom>Recommended for You</Typography>
           <RecommendationBooks />
         </>
       )}
-
-      <Typography variant="h5" gutterBottom>All Books</Typography>
       <BookList />
     </Box>
   );

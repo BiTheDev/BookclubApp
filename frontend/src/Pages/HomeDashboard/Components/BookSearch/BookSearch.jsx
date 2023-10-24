@@ -10,7 +10,7 @@ const BookSearch = () => {
 
     const searchBooks = async () => {
         try {
-            const response = await axios.get(`/api/searchBooks?q=${query}`);
+            const response = await axios.get(`/api/books/book-search?q=${query}`);
             setResults(response.data.items); // Google Books API returns the results under "items".
         } catch (error) {
             console.error("Failed to fetch books from API:", error);

@@ -1,9 +1,7 @@
-import React from 'react'
+import BooksDisplay from "../BooksDisplay/BooksDisplay";
 
 const TopRatedBooks = () => {
-  return (
-    <div>TopRatedBooks</div>
-  )
-}
+  return <BooksDisplay title="Top Rated Books" apiUrl="/api/books/top-rated-books" />;
+};
 
-export default TopRatedBooks
+export default TopRatedBooks;
