@@ -55,6 +55,39 @@ const BookList = () => {
 
   const defaultImage = "path_to_default_image.jpg";
 
+  const handleBookClick = async (book) => {
+    try {
+        // Check if the book is from Google Books or already from our DB
+        if (book.source === 'GoogleBooks') {
+            // Save book to local DB
+            const response = await fetch('/api/books/save-google-book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: book.volumeInfo.title,
+                    author: book.volumeInfo.authors[0],
+                    coverImageUrl: book.volumeInfo.imageLinks.thumbnail,
+                    description: book.volumeInfo.description,
+                    ISBN: book.volumeInfo.industryIdentifiers[0].identifier,
+                }),
+            });
+            const savedBook = await response.json();
+
+            // Navigate to the book detail page
+            // This will depend on your routing library (e.g., react-router)
+            // navigate(`/book-detail/${savedBook._id}`);
+        } else {
+            // Book is already in our DB, navigate directly
+            // navigate(`/book-detail/${book._id}`);
+        }
+    } catch (error) {
+        console.error('Error saving or navigating to book:', error);
+    }
+}
+
+
   return (
     <Box p={1}>
       <Typography variant="h5" gutterBottom>
@@ -101,7 +134,7 @@ const BookList = () => {
 
       <Box display="flex" flexWrap="wrap">
         {books.map((book, index) => (
-          <Box key={index} width={250} height={320} m={2}>
+          <Box key={index} width={250} height={320} m={2} onClick={() => handleBookClick(book)}>
             <Card sx={{ height: "100%", width: "200px" }}>
               <CardMedia
                 component="img"
